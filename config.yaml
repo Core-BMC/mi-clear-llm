@@ -1,0 +1,253 @@
+llm_option: 'openai' # or 'azure' or 'gemini'
+
+openai:
+  llm:
+    model: 'gpt-4o'
+    temperature: 0.0
+  request_delay: 0
+  retry_delay: 1
+
+azure:
+  openai_api_version: "openai_api_version"
+  api_base: 'https://your_api_base.openai.azure.com/'
+  llm:
+    azure_deployment: "gpt-4o"
+    temperature: 0.0
+  request_delay: 0
+  retry_delay: 1
+
+gemini:
+  llm:
+    model_name: 'gemini-1.5-pro'
+    temperature: 0.0
+  request_delay: 10
+  retry_delay: 10
+
+# Folder settings
+input_folder: 'pdf_folder_path'
+output_folder: 'output_csv_folder_name'
+number_of_pdf_files: 2 # Set the number of PDF files to process, or remove this line / set to null to process all files
+
+# Prompts
+prompts:
+  llm_info:
+    template: |
+      You are an AI assistant specializing in extracting Information Items for LLM Research. Based on the following Journal text, follow these steps:
+
+      Journal text: {journal_text}
+
+      1. Evaluate the Large Language Model (LLM) information from the study. Specifically, locate and record details on the following aspects: LLM Name, Version, Manufacturer, Training Data Cutoff Date, RAG Access, and Query Date. For each piece of information, provide the exact location in the paper where it was found (e.g., section, page number, and the specific sentence). Make sure to double-check if the sentence is indeed present in the journal.
+
+      2. To accurately capture this information, thoroughly review the **Materials and Methods** section first, as this section often contains detailed descriptions of the model and data used. Additionally, carefully examine all **Tables and Figures** in the paper, as they may include important information or references to the LLM specifications.
+
+      3. Include a "Found" column in the table to indicate whether each piece of information was found (Y/N).
+
+      4. When recording the "Source Location", be specific about where the information is located and include the following:
+          - The section title
+          - The page number
+          - The exact sentence or phrase where the detail is mentioned
+          - **Ensure that the cited sentence exists in the journal text by re-reading the relevant passage**. If the sentence is not an exact match, provide a note and correct the location appropriately.
+
+      5. Summarize the findings following JSON format:
+
+      ```json
+      {{
+          "Item": ["LLM Name", "Version", "Manufacturer", "Training Data Cutoff Date", "RAG Access", "Query Date"],
+          "Found": ["{{Found LLM Name}}", "{{Found Version}}", "{{Found Manufacturer}}", "{{Found Training Data Cutoff Date}}", "{{Found RAG Access}}", "{{Found Query Date}}"],
+          "Details": ["{{LLM Name}}", "{{Version}}", "{{Manufacturer}}", "{{Training Data Cutoff Date}}", "{{RAG Access}}", "{{Query Date}}"],
+          "Source_Location_Section_Page_Sentence": ["{{LLM Name Location}}", "{{Version Location}}", "{{Manufacturer Location}}", "{{Training Data Cutoff Date Location}}", "{{RAG Access Location}}", "{{Query Date Location}}"]
+      }}
+      ```
+
+      Your response must always be in **valid JSON format**, enclosed in triple backticks. Do not write any comments or completion messages outside the backticks.
+
+  stochasticity:
+    template: |
+      You are an AI assistant specializing in extracting Information Items for LLM Research. Based on the following Journal text, follow these steps:
+
+      Journal text: {journal_text}
+
+      1. Evaluate how stochasticity was handled in the study. Specifically, locate and record details on the following aspects: Number of querying attempts, Synthesis of multiple results, Reliability analysis across attempts, and Temperature settings. For each piece of information, provide the exact location in the paper where it was found (e.g., section, page number, and specific sentence). Ensure that the exact sentence from the journal text is quoted or summarized, and **confirm the sentence exists by re-reading the relevant part of the paper.** 
+
+      2. To accurately capture this information, thoroughly review the **Materials and Methods** and **Results** sections first, as these sections often contain detailed descriptions of the experimental setup and analysis procedures. Additionally, carefully examine all **Tables and Figures** in the paper, as they may include important information or references to stochasticity handling.
+
+      3. Include a "Found" column in the table to indicate whether each piece of information was found (Y/N).
+
+      4. When providing the "Source Location", be as detailed as possible:
+          - Include the section title, page number, and the exact sentence or phrase where the detail was found.
+          - **Ensure that the cited sentence exists in the journal by re-reading and double-checking the passage**. If it is not an exact match, note the discrepancy and adjust the source location.
+
+      5. Summarize the findings following JSON format:
+
+      ```json
+      {{
+          "Item": ["Number of querying attempts", "Synthesis of multiple results", "Reliability analysis across attempts", "Temperature settings"],
+          "Found": ["{{Found Number of querying attempts}}", "{{Found Synthesis of multiple results}}", "{{Found Reliability analysis}}", "{{Found Temperature settings}}"],
+          "Details": ["{{Number of querying attempts}}", "{{Synthesis of multiple results}}", "{{Reliability analysis}}", "{{Temperature settings}}"],
+          "Source_Location_Section_Page_Sentence": ["{{Number of querying attempts Location}}", "{{Synthesis of multiple results Location}}", "{{Reliability analysis Location}}", "{{Temperature settings Location}}"]
+      }}
+      ```
+
+      Your response must always be in **valid JSON format**, enclosed in triple backticks. Do not write any comments or completion messages outside the backticks.
+
+  prompt_reporting:
+    template: |
+      You are an AI assistant specializing in extracting Information Items for LLM Research. Based on the following Journal text, follow these steps:
+
+      Journal text: {journal_text}
+
+      1. Evaluate how the exact text of prompts was reported in the study. Specifically, locate and record details on the following aspects: Precise spellings, Symbols used, Punctuation, Spaces, and any other relevant syntax details. For each piece of information, provide the exact location in the paper where it was found (e.g., section, page number, and the specific sentence). Make sure to double-check if the sentence is indeed present in the journal.
+
+      2. To accurately capture this information, thoroughly review the **Methods** and **Appendix** sections first, as these sections often contain detailed descriptions of the experimental setup and prompt details. Additionally, carefully examine all **Tables and Figures** in the paper, as they may include examples or specifications of the prompts used.
+
+      3. Include a "Found" column in the table to indicate whether each piece of information was found (Y/N).
+
+      4. When recording the "Source Location", be specific about where the information is located and include the following:
+          - The section title
+          - The page number
+          - The exact sentence or phrase where the detail is mentioned
+          - **Ensure that the cited sentence exists in the journal text by re-reading the relevant passage**. If the sentence is not an exact match, provide a note and correct the location appropriately.
+
+      5. Summarize the findings following JSON format:
+
+      ```json
+      {{
+          "Item": ["Precise Spellings", "Symbols Used", "Punctuation", "Spaces", "Other Relevant Syntax"],
+          "Found": ["{{Found Precise Spellings}}", "{{Found Symbols Used}}", "{{Found Punctuation}}", "{{Found Spaces}}", "{{Found Other Relevant Syntax}}"],
+          "Details": ["{{Precise Spellings}}", "{{Symbols Used}}", "{{Punctuation}}", "{{Spaces}}", "{{Other Relevant Syntax}}"],
+          "Source_Location_Section_Page_Sentence": ["{{Precise Spellings Location}}", "{{Symbols Used Location}}", "{{Punctuation Location}}", "{{Spaces Location}}", "{{Other Relevant Syntax Location}}"]
+      }}
+      ```
+
+      Your response must always be in **valid JSON format**, enclosed in triple backticks. Do not write any comments or completion messages outside the backticks.
+
+  prompt_usage:
+    template: |
+      You are an AI assistant specializing in extracting Prompt Usage Information for LLM Research. Based on the following Journal text, follow these steps:
+
+      Journal text: {journal_text}
+
+      1. Evaluate how the prompts were employed in the study. Specifically, locate and record details on the following aspects: whether each query and its corresponding prompts were treated as individual chat sessions or processed together in a single session, whether multiple queries were input all at once or sequentially across multiple rounds, and how the final analysis of the prompts was synthesized. For each piece of information, provide the exact location in the paper where it was found (e.g., section, page number, and the specific sentence). Make sure to double-check if the sentence is indeed present in the journal.
+
+      2. To accurately capture this information, thoroughly review the **Materials and Methods** section first, as this section often contains detailed descriptions of how the queries and prompts were employed. Additionally, carefully examine any **Tables and Figures** in the paper, as they may include important references to prompt usage details.
+
+      3. Include a "Found" column in the table to indicate whether each piece of information was found (Y/N).
+
+      4. When recording the "Source Location", be specific about where the information is located and include the following:
+          - The section title
+          - The page number
+          - The exact sentence or phrase where the detail is mentioned
+          - **Ensure that the cited sentence exists in the journal text by re-reading the relevant passage**. If the sentence is not an exact match, provide a note and correct the location appropriately.
+
+      5. Summarize the findings following JSON format:
+
+      ```json
+      {{
+          "Item": ["Chat Sessions", "Sequential Query Input", "Prompt Analysis Synthesis"],
+          "Found": ["{{Found Chat Sessions}}", "{{Found Sequential Query Input}}", "{{Found Prompt Analysis Synthesis}}"],
+          "Details": ["{{Chat Sessions}}", "{{Sequential Query Input}}", "{{Prompt Analysis Synthesis}}"],
+          "Source_Location_Section_Page_Sentence": ["{{Chat Sessions Location}}", "{{Sequential Query Input Location}}", "{{Prompt Analysis Synthesis Location}}"]
+      }}
+      ```
+
+      Your response must always be in **valid JSON format**, enclosed in triple backticks. Do not write any comments or completion messages outside the backticks.
+
+  prompt_testing_optimization:
+    template: |
+      You are an AI assistant specializing in extracting Prompt Testing and Optimization Information for LLM Research. Based on the following Journal text, follow these steps:
+
+      Journal text: {journal_text}
+
+      1. Evaluate the prompt testing and optimization details from the study. Specifically, locate and record information on the following aspects: the steps taken to create the prompts, the rationale behind selecting specific wording over alternatives, and whether the data used during prompt testing and optimization was independent from the data used to evaluate LLM performance. For each piece of information, provide the exact location in the paper where it was found (e.g., section, page number, and the specific sentence). Make sure to double-check if the sentence is indeed present in the journal.
+
+      2. To accurately capture this information, thoroughly review the **Materials and Methods** section first, as this section often contains detailed descriptions of how the prompts were tested and optimized. Additionally, carefully examine any **Tables and Figures** in the paper, as they may include important references to the testing and optimization process.
+
+      3. Include a "Found" column in the table to indicate whether each piece of information was found (Y/N).
+
+      4. When recording the "Source Location", be specific about where the information is located and include the following:
+          - The section title
+          - The page number
+          - The exact sentence or phrase where the detail is mentioned
+          - **Ensure that the cited sentence (as mentioned site 5 to 10 words) exists in the journal text by re-reading the relevant passage**. If the sentence is not an exact match, provide a note and correct the location appropriately.
+
+      5. Summarize the findings following JSON format:
+
+      ```json
+      {{
+          "Item": ["Steps to Create Prompts", "Rationale for Specific Wording", "Independent Data for Testing"],
+          "Found": ["{{Found Steps to Create Prompts}}", "{{Found Rationale for Specific Wording}}", "{{Found Independent Data for Testing}}"],
+          "Details": ["{{Steps to Create Prompts}}", "{{Rationale for Specific Wording}}", "{{Independent Data for Testing}}"],
+          "Source_Location_Section_Page_Sentence": ["{{Steps to Create Prompts Location}}", "{{Rationale for Specific Wording Location}}", "{{Independent Data for Testing Location}}"]
+      }}
+      ```
+
+      Your response must always be in **valid JSON format**, enclosed in triple backticks. Do not write any comments or completion messages outside the backticks.
+
+  test_dataset_independence:
+    template: |
+      You are an AI assistant specializing in extracting Information about the Independence of Test Datasets for LLM Research. Based on the following Journal text, follow these steps:
+
+      Journal text: {journal_text}
+
+      1. Evaluate whether the test dataset used in the study was independent from the data used during LLM training or prompt testing. Specifically, locate and record information on the following aspects: whether any portion of the test data was used in the model training, prompt testing, or optimization process, and if the test data was sourced from the internet, ensure that exact URLs where they can be found are included. For each piece of information, provide the exact location in the paper where it was found (e.g., section, page number, and the specific sentence). Make sure to double-check if the sentence is indeed present in the journal.
+
+      2. To accurately capture this information, thoroughly review the **Materials and Methods** and **Results** sections first, as these sections often contain detailed descriptions of how the test datasets were curated and whether they were independent. Additionally, carefully examine any **References or Appendices** in the paper, as they may include important details regarding the dataset sources or independence.
+
+      3. Include a "Found" column in the table to indicate whether each piece of information was found (Y/N).
+
+      4. When recording the "Source Location", be specific about where the information is located and include the following:
+          - The section title
+          - The page number
+          - The exact sentence or phrase where the detail is mentioned
+          - **Ensure that the cited sentence (as mentioned site 5 to 10 words) exists in the journal text by re-reading the relevant passage**. If the sentence is not an exact match, provide a note and correct the location appropriately.
+
+      5. Summarize the findings following JSON format:
+
+      ```json
+      {{
+          "Item": ["Independent Test Data", "Data Source from Internet"],
+          "Found": ["{{Found Independent Test Data}}", "{{Found Data Source from Internet}}"],
+          "Details": ["{{Independent Test Data}}", "{{Data Source from Internet}}"],
+          "Source_Location_Section_Page_Sentence": ["{{Independent Test Data Location}}", "{{Data Source from Internet Location}}"]
+      }}
+      ```
+
+      Your response must always be in **valid JSON format**, enclosed in triple backticks. Do not write any comments or completion messages outside the backticks.
+
+# Output models
+output_models:
+  llm_info:
+    - Item
+    - Found
+    - Details
+    - Source_Location_Section_Page_Sentence
+
+  stochasticity:
+    - Item
+    - Found
+    - Details
+    - Source_Location_Section_Page_Sentence
+  
+  prompt_reporting:
+    - Item
+    - Found
+    - Details
+    - Source_Location_Section_Page_Sentence
+
+  prompt_usage:
+    - Item
+    - Found
+    - Details
+    - Source_Location_Section_Page_Sentence
+
+  prompt_testing_optimization:
+    - Item
+    - Found
+    - Details
+    - Source_Location_Section_Page_Sentence
+
+  test_dataset_independence:
+    - Item
+    - Found
+    - Details
+    - Source_Location_Section_Page_Sentence

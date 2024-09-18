@@ -1,0 +1,14 @@
+pandas
+openpyxl
+pyyaml
+python-dotenv
+langchain
+langchain-core
+langchain-openai
+langchain-community
+langchain-experimental
+google-generativeai
+#langgraph
+openai
+pydantic
+httpx
