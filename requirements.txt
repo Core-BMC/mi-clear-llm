@@ -12,3 +12,4 @@ google-generativeai
 openai
 pydantic
 httpx
+pymupdf
