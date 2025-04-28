@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "이 소프트웨어를 인용하려면 아래 정보를 사용하세요."
+title: "MI-CLEAR-LLM 체크리스트 자동 생성 도구"
+abstract: "의학 연구에서 대규모 언어 모델(LLM) 사용을 보고하는 MI-CLEAR-LLM 체크리스트 항목을 자동으로 추출하는 도구"
+authors:
+  - family-names: "HEO"
+    given-names: "H"
+  - family-names: "SHIM"
+    given-names: "WH"
+version: 1.0.0
+date-released: 2025-04-28
+repository-code: "https://github.com/CORE-BMC/mi-clear-llm"
+license: MIT
+references:
+  - title: "Automated Generation of MI-CLEAR-LLM Checklists for Studies on Large Language Models in Medical Applications Published in Top Journals"
+    type: article

@@ -1,137 +1,100 @@
-# MI-CLEAR-LLM Information Extractor
+# MI-CLEAR-LLM 체크리스트 자동 생성 도구
 
-## Overview
+본 프로젝트는 "Automated Generation of MI-CLEAR-LLM Checklists for Studies on Large Language Models in Medical Applications Published in Top Journals" 논문의 구현체입니다.
 
-This project implements an automated information extraction tool for the MI-CLEAR-LLM (The Minimum reporting Items for CLear Evaluation of Accuracy Reports of Large Language Models in healthcare) checklist. The MI-CLEAR-LLM checklist aims to provide a set of essential items for the transparent reporting of clinical studies that present the accuracy of Large Language Models (LLMs) in healthcare applications, promoting clearer evaluation of study findings.
+## 개요
 
-## Purpose
+MI-CLEAR-LLM 체크리스트는 의학 연구에서 대규모 언어 모델(LLM)의 사용을 보고하는 표준화된 방법을 제공합니다. 이 도구는 GPT-4o, o1 등의 LLM을 활용하여 연구 논문에서 MI-CLEAR-LLM 체크리스트 항목에 해당하는 정보를 자동으로 추출합니다.
 
-The primary goal of this tool is to assist researchers and reviewers in extracting and analyzing key information from research papers that evaluate LLMs in healthcare contexts. By automating the extraction process, we aim to:
+## 주요 기능
 
-1. Ensure consistent evaluation of papers against the MI-CLEAR-LLM checklist items.
-2. Facilitate faster and more accurate assessment of LLM studies in healthcare.
-3. Promote transparency and reproducibility in LLM research within the medical field.
+- PDF 형식의 의학 논문에서 텍스트 및 이미지 기반 분석 수행
+- 여러 LLM 모델(OpenAI, Azure OpenAI, Google Gemini) 지원
+- 다음과 같은 MI-CLEAR-LLM 항목 추출:
+  - LLM 정보 (모델명, 버전, 제조사 등)
+  - 확률적 특성 (요청 시도 횟수, 온도 설정 등)
+  - 프롬프트 보고 (정확한 철자, 기호, 구두점 등)
+  - 프롬프트 사용 (채팅 세션 구조, 쿼리 입력 방법 등)
+  - 프롬프트 테스트 및 최적화 방법
+  - 테스트 데이터셋 독립성
+- CSV 형식의 분석 결과 출력
 
-## Features
+## 설치 방법
 
-- Extracts information related to MI-CLEAR-LLM checklist items, including:
-  - LLM details (name, version, manufacturer, etc.)
-  - Stochasticity handling in the study
-  - Prompt reporting and usage
-  - Prompt testing and optimization methods
-  - Test dataset independence
-- Supports multiple LLM backends for information extraction: OpenAI, Azure OpenAI, and Google's Gemini
-- Processes multiple PDF files of research papers
-- Generates structured CSV outputs for easy analysis
+### 요구 사항
 
-## Requirements
+- Python 3.9 이상
+- 필요한 API 키:
+  - OpenAI API 키
+  - Azure OpenAI API 키 (Azure 사용 시)
+  - Google API 키 (Gemini 사용 시)
 
-- Python 3.10+
-- Dependencies listed in `requirements.txt`
+### 환경 설정
 
-## Setup
-
-1. Clone the repository:
-   ```
-   git clone https://github.com/your-username/mi-clear-llm.git
-   cd mi-clear-llm
-   ```
-
-2. Create a virtual environment and activate it:
-   ```
-   python -m venv venv
-   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-   ```
-
-3. Install the required packages:
-   ```
-   pip install -r requirements.txt
-   ```
-
-4. Set up your environment variables:
-   Create a `.env` file in the project root and add your API keys:
-   ```
-   OPENAI_API_KEY=your_openai_api_key
-   AZURE_OPENAI_API_KEY=your_azure_openai_api_key
-   GOOGLE_API_KEY=your_google_api_key
-   ```
-
-5. Configure the `config.yaml` file:
-   - Set the `llm_option` to your preferred LLM backend ('openai', 'azure', or 'gemini')
-   - Adjust the model settings, input/output folders, and other parameters as needed
-
-## Usage
-
-1. Place the PDF files of the research papers you want to analyze in the input folder specified in `config.yaml`.
-
-2. Run the main script:
-   ```
-   python mcllm_main_v1.py
-   ```
-
-3. The script will process the PDF files and generate CSV outputs in the specified output folder. These outputs will contain the extracted information relevant to the MI-CLEAR-LLM checklist items.
-
-## Configuration
-
-You can modify the `config.yaml` file to adjust various settings:
-
-- LLM backend and model settings
-- Input and output folder paths
-- Number of PDF files to process
-- Prompt templates for information extraction (aligned with MI-CLEAR-LLM checklist items)
-- Output model configurations
-
-## Output
-
-The script generates two types of CSV files for each processed PDF:
-
-1. Individual CSV files for each MI-CLEAR-LLM checklist category
-2. A combined CSV file with all extracted information
-
-These files are organized in the output folder specified in the configuration, allowing for easy review and analysis of the extracted data.
-
-## Contributing
-
-Contributions to improve the project are welcome, especially those that enhance the tool's ability to extract MI-CLEAR-LLM relevant information. Please follow these steps:
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/your-feature`)
-3. Make your changes
-4. Commit your changes (`git commit -am 'Add some feature'`)
-5. Push to the branch (`git push origin feature/your-feature`)
-6. Create a new Pull Request
-
-## License
-
-[MIT License](LICENSE)
-
-## Acknowledgments
-
-- This project is based on the MI-CLEAR-LLM checklist, which aims to improve the reporting quality of LLM studies in healthcare.
-- We use various open-source libraries and AI models. Please refer to the `requirements.txt` file for a full list of dependencies.
-
-## Citation
-
-If you use this tool in your research, please cite both the original MI-CLEAR-LLM checklist paper and this repository:
-
-[Include citation for MI-CLEAR-LLM paper when available]
-
-```
-@software{mi_clear_llm,
-  author = {[Your Name]},
-  title = {MI-CLEAR-LLM Information Extractor},
-  year = {[Current Year]},
-  url = {https://github.com/your-username/mi-clear-llm-extractor}
-}
+1. 저장소 복제:
+```bash
+git clone https://github.com/yourusername/mi-clear-llm.git
+cd mi-clear-llm
 ```
 
-## Contact
+2. 가상환경 생성 및 활성화:
+```bash
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate  # Windows
+```
 
-For issues or contributions, please reach out to the repository maintainer:
-- **Email**: heohwon@gmail.com
-- **GitHub**: [Core-BMC](https://github.com/Core-BMC), [HwonHeo](https://github.com/hwonheo)
+3. 의존성 설치:
+```bash
+pip install -r requirements.txt
+```
 
+4. `.env` 파일 생성:
+```bash
+cp .env.example .env
+# .env 파일에 API 키 입력
+```
 
-## Disclaimer
+## 사용 방법
 
-This tool is designed to assist in the extraction of information relevant to the MI-CLEAR-LLM checklist. It should be used as an aid in the review process and not as a replacement for human expert evaluation. Always verify the extracted information against the original research papers.
+1. 분석할 PDF 파일을 `input` 폴더에 저장합니다.
+
+2. 설정 파일 조정 (필요시):
+   - `config_txt-mode.yaml`: 텍스트 모드 설정
+   - `config_img-mode.yaml`: 이미지 모드 설정
+
+3. 실행:
+
+텍스트 기반 분석:
+```bash
+python mcllm_txt_mode.py
+```
+
+이미지 기반 분석:
+```bash
+python mcllm_img_mode.py
+```
+
+4. 결과는 `output` 폴더에 CSV 파일로 저장됩니다.
+
+## 프로젝트 구조
+
+```
+mi-clear-llm/
+├── mcllm_txt_mode.py      # 텍스트 기반 분석
+├── mcllm_img_mode.py      # 이미지 기반 분석
+├── config_txt-mode.yaml   # 텍스트 모드 설정
+├── config_img-mode.yaml   # 이미지 모드 설정
+├── requirements.txt       # 의존성 패키지
+├── .env.example           # 환경 변수 예시
+├── input/                 # 입력 PDF 파일 위치
+└── output/                # 출력 CSV 파일 저장 위치
+```
+
+## 참고 문헌
+
+- "Automated Generation of MI-CLEAR-LLM Checklists for Studies on Large Language Models in Medical Applications Published in Top Journals"
+
+## 라이선스
+
+MIT License

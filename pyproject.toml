@@ -1,0 +1,58 @@
+[project]
+name = "mi-clear-llm"
+version = "1.0.0"
+description = "Automated Generation of MI-CLEAR-LLM Checklists for Studies on Large Language Models in Medical Applications"
+authors = [
+    {name = "HH", email = "heohwon@gmail.com"},{name = "WHS"}
+]
+requires-python = ">=3.9"
+readme = "README.md"
+license = {text = "MIT"}
+
+dependencies = [
+    "langchain>=0.3.3",
+    "langchain-community>=0.3.2",
+    "langchain-text-splitters>=0.3.0",
+    "langchain-core>=0.3.10",
+    "langchain-experimental>=0.3.2",
+    "langgraph>=0.2.36",
+    "langserve>=0.3.0",
+    "langchain-google-community>=2.0.1",
+    "langchain-google-genai>=2.0.1",
+    "langchain-openai>=0.2.2",
+    "openai>=1.51.2",
+    "google-generativeai>=0.8.3",
+    "pillow>=11.0.0",
+    "google-cloud-aiplatform>=1.74.0",
+    "python-dotenv>=1.0.0",
+    "pymupdf>=1.23.0",
+    "pyyaml>=6.0",
+    "pandas>=2.0.0",
+    "tqdm>=4.66.0",
+    "pydantic>=2.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.5",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+select = ["E", "F", "I", "W"]
+ignore = []
+
+[tool.ruff.isort]
+known-first-party = ["mi_clear_llm"]
+
+[tool.black]
+line-length = 88
+target-version = ["py39"]

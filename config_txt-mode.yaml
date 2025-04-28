@@ -1,0 +1,40 @@
+# config_txt-mode.yaml
+llm_option: 'openai' #'openai' or 'openai_o1' or 'azure' or 'gemini'
+
+openai:
+  llm:
+    model: 'gpt-4o' #your openai model
+    temperature: 0.0
+  request_delay: 0
+  retry_delay: 1
+
+openai_o1:
+  llm:
+    model: 'o1' #o3-mini (or reasoning model, text only) 
+  request_delay: 0
+  retry_delay: 1
+
+azure:
+  openai_api_version: #api version "2024-05-01-preview"
+  api_base: #api base 'https://your-api-base.openai.azure.com/'
+  llm:
+    azure_deployment: "gpt-4o" #your azure-openai model
+    temperature: 0.0
+  request_delay: 0
+  retry_delay: 1
+
+gemini:
+  project_id: #"your-vertex-ai-project-numbers"
+  location: #"us-central1" #your vertexai project location
+  llm:
+    model_name: "gemini-2.0-flash-001" #your vertexai gemini model
+    temperature: 0.0
+    max_output_tokens: 8192
+    top_p: 0.95
+  request_delay: 1
+  retry_delay: 1
+
+# Folder settings
+input_folder: 'input' #'pdf input folder'
+output_folder: 'output' #'csv output folder'
+number_of_pdf_files: #Set the number of PDF files to process, or remove this line / set to null to process all files
