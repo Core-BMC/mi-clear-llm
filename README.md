@@ -1,6 +1,6 @@
 # MI-CLEAR-LLM 체크리스트 자동 생성 도구
 
-본 프로젝트는 "Automated Generation of MI-CLEAR-LLM Checklists for Studies on Large Language Models in Medical Applications Published in Top Journals" 논문의 구현체입니다.
+본 프로젝트는 "Automated Generation of MI-CLEAR-LLM Checklists for Studies on Large Language Models in Medical Applications Published in Top Journals" 논문의 구현 전체코드입니다.
 
 ## 개요
 
@@ -8,7 +8,7 @@ MI-CLEAR-LLM 체크리스트는 의학 연구에서 대규모 언어 모델(LLM)
 
 ## 주요 기능
 
-- PDF 형식의 의학 논문에서 텍스트 및 이미지 기반 분석 수행
+- PDF 형식의 의학 논문에서 텍스트 및 PDF로 부터 추출한 페이지 전체 이미지 기반 Reasoning-Findiongs 분석 수행
 - 여러 LLM 모델(OpenAI, Azure OpenAI, Google Gemini) 지원
 - 다음과 같은 MI-CLEAR-LLM 항목 추출:
   - LLM 정보 (모델명, 버전, 제조사 등)
@@ -33,7 +33,7 @@ MI-CLEAR-LLM 체크리스트는 의학 연구에서 대규모 언어 모델(LLM)
 
 1. 저장소 복제:
 ```bash
-git clone https://github.com/yourusername/mi-clear-llm.git
+git clone https://github.com/CORE-BMC/mi-clear-llm.git
 cd mi-clear-llm
 ```
 
@@ -57,7 +57,7 @@ cp .env.example .env
 
 ## 사용 방법
 
-1. 분석할 PDF 파일을 `input` 폴더에 저장합니다.
+1. 분석할 저널 논문 PDF 파일을 `input` 폴더에 저장합니다.
 
 2. 설정 파일 조정 (필요시):
    - `config_txt-mode.yaml`: 텍스트 모드 설정
@@ -93,8 +93,12 @@ mi-clear-llm/
 
 ## 참고 문헌
 
-- "Automated Generation of MI-CLEAR-LLM Checklists for Studies on Large Language Models in Medical Applications Published in Top Journals"
+- "KO et al., 2025. Automated Generation of MI-CLEAR-LLM Checklists for Studies on Large Language Models in Medical Applications Published in Top Journals"
 
 ## 라이선스
 
 MIT License
+
+## 코드문의
+
+HH (heohwon@gmail.com)
